@@ -1,14 +1,16 @@
 var x = document.getElementById("info");
 Location();
 var setPost = setInterval(Location, 30000);
-var dbAddress = 'http://localhost:8000';
+var dbAddress = 'http://localhost:8000';    //10.0.2.2:8000 -> android emulator loopback
+var timezone = 8;   // Singapore timezone: GMT+8
 
 /**
- * checks if browser has geolocation enabled. Use HTML5 geolocation API if possible (user gave permission), else use ip address lookup
+ * checks if browser has geolocation enabled. Use HTML5 geolocation API 
+ * if possible (ie. user gave permission), else use ip address lookup
  */
 function Location() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, (error) => showPositionAlt());
+        navigator.geolocation.getCurrentPosition(showPositionGeolocation, (error) => showPositionIPLookup());
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
@@ -16,33 +18,37 @@ function Location() {
 
 /**
  * gets location information with HTML5 geolocation API and browser information
+ * time is set to variable timezone
  */
-function showPosition(position) {
+function showPositionGeolocation(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
     x.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
-    postJson(getTime(), lat, lon, position.coords.altitude, position.coords.accuracy, position.coords.heading, position.coords.speed, getHost(), window.navigator.language, checkOS(), getFingerprint());
-    //var sendPost = setInterval(postJson(dateTimeNow, position.coords.latitude, position.coords.longitude), 6000);
-    //post('/', {time: dateTimeNow, lat: position.coords.latitude, lon: position.coords.longitude});
-    //var sendPost = setInterval(function() {post('/', {time: dateTimeNow, lat: position.coords.latitude, lon: position.coords.longitude})}, 60000);
+    postJson(getTime(timezone), lat, lon, position.coords.altitude, position.coords.accuracy, 
+            position.coords.heading, position.coords.speed, getHost(), 
+            window.navigator.language, checkOS(), getFingerprint());
 }
 /**
  * gets location information with ip address lookup and browser information
- * -1 accuracy means likely to be inaccurate
+ * time is set to variable timezone
+ * -1 accuracy means location is likely to be inaccurate
  */
-function showPositionAlt() { 
+function showPositionIPLookup() { 
     var lat = geoplugin_latitude();
     var lon = geoplugin_longitude();
     x.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
     var dateTimeNow = getTime();
-    postJson(getTime(), lat, lon, null, -1, null, null, getHost(), window.navigator.language, checkOS(), getFingerprint());
+    postJson(getTime(timezone), lat, lon, null, -1, null, null, getHost(), 
+            window.navigator.language, checkOS(), getFingerprint());
 }
 
 /**
- * returns date and time in format YYYY-MM-DD hh:mm:ss
+ * returns date and time offset to specified timezone in format YYYY-MM-DD hh:mm:ss
  */
-function getTime() {
-    return new Date().toISOString().slice(0, 19).replace('T', ' ');
+function getTime(utcOffset) {
+    var dateTime = new Date();
+    dateTime.setHours(dateTime.getHours() + utcOffset);
+    return dateTime.toISOString().slice(0, 19).replace('T', ' ');
 }
 
 /**
@@ -56,7 +62,8 @@ function getFingerprint() {
  * returns parent's hostname if ad is on a different domain from the visited site
  */
 function getHost() {
-    return (window.location != window.parent.location) ? getHostName(document.referrer) : document.location.hostname;
+    return (window.location != window.parent.location) ? 
+        getHostName(document.referrer) : document.location.hostname;
 }
 
 /**

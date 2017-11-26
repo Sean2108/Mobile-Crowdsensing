@@ -34,12 +34,16 @@ con = mysql.createConnection({
 var maxDeviceId;
 
 /**
- * create table if it does not exist, and get the max value of cookie id (to assign to next new visitor)
+ * create table if it does not exist, and get the max value of cookie id 
+ * (to assign to next new visitor)
  */
 con.connect((err) => {
     if (err) throw err;
     console.log("Getting current device max value...");
-    var sql = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, device INT, fingerprint VARCHAR(255), ts TIMESTAMP(0), lat DOUBLE, lon DOUBLE, alt DOUBLE, acc DOUBLE, heading DOUBLE, speed DOUBLE, host VARCHAR(255), lang VARCHAR(255), os VARCHAR(255))";
+    var sql = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, " + 
+        "device INT, fingerprint VARCHAR(255), ts TIMESTAMP(0), lat DOUBLE, lon DOUBLE, " + 
+        "alt DOUBLE, acc DOUBLE, heading DOUBLE, speed DOUBLE, host VARCHAR(255), " + 
+        "lang VARCHAR(255), os VARCHAR(255))";
     con.query(sql, (err, result) => {
         if (err) throw err;
         console.log("Table created");
@@ -90,8 +94,10 @@ app.post('/', function(request, response){
     var lang = request.body.lang;
     var os = request.body.os;
 
-    if (lat && lon) console.log("time: " + time + ", device: " + device + ', fingerprint: ' + fingerprint + ', lat: ' + lat + ", lon: " + lon);
-    console.log("alt: " + altitude + ", acc: " + accuracy + ", heading: " + heading + ", speed: " + speed + ", host: " + host + ", lang: " + lang + ", os: " + os);
+    console.log("time: " + time + ", device: " + device + ', fingerprint: ' + fingerprint + 
+            ', lat: ' + lat + ", lon: " + lon + "\nalt: " + altitude + ", acc: " + accuracy + 
+            ", heading: " + heading + ", speed: " + speed + ", host: " + host + ", lang: " + 
+            lang + ", os: " + os);
     addRecord(time, device, fingerprint, lat, lon, altitude, accuracy, heading, speed, host, lang, os);
 });
 
@@ -112,7 +118,8 @@ app.post('/', function(request, response){
  */
 function addRecord(time, device, fingerprint, lat, lon, altitude, accuracy, heading, speed, host, lang, os) {
     console.log("Adding record...");
-    var sql = "INSERT INTO users SET ts = ?, device = ?, fingerprint = ?, lat = ?, lon = ?, alt = ?, acc = ?, heading = ?, speed = ?, host = ?, lang = ?, os = ?";
+    var sql = "INSERT INTO users SET ts = ?, device = ?, fingerprint = ?, lat = ?, lon = ?, alt = ?, " + 
+        "acc = ?, heading = ?, speed = ?, host = ?, lang = ?, os = ?";
     con.query(sql, [time, device, fingerprint, lat, lon, altitude, accuracy, heading, speed, host, lang, os]);
 }
 
