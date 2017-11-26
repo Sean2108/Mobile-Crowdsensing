@@ -3,19 +3,19 @@
 Uses advertisement data to collect data for research. (Proof of concept)
 
 Schema:
-- id
-- device (cookie information)
-- fingerprint (from FingerprintJS2 library)
-- timestamp
-- latitude
-- longitude
-- altitude (if available)
-- accuracy (-1 if HTML5 geolocation API is unavailable)
-- heading (if available)
-- speed (if available)
-- host name
-- browser default language
-- operating system
+- id                                                    - int
+- device (cookie information)                           - int
+- fingerprint (from FingerprintJS2 library)             - varchar(255)
+- timestamp (in UTC)                                    - timestamp 
+- latitude                                              - double
+- longitude                                             - double
+- altitude (if available)                               - double
+- accuracy (-1 if HTML5 geolocation API is unavailable) - double
+- heading (if available)                                - double
+- speed (if available)                                  - double
+- host name                                             - varchar(255)
+- browser default language                              - varchar(255)
+- operating system                                      - varchar(255)
 
 Node backend(backend.js) distributes html and js files(frontend.html, frontend_script.js, fingerprint2.js) through Express.js to clients, which will return the location and browser information. The backend will store the information in a MySQL database.
 

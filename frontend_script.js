@@ -38,6 +38,9 @@ function showPositionAlt() {
     postJson(getTime(), lat, lon, null, -1, null, null, getHost(), window.navigator.language, checkOS(), getFingerprint());
 }
 
+/**
+ * returns date and time in format YYYY-MM-DD hh:mm:ss
+ */
 function getTime() {
     return new Date().toISOString().slice(0, 19).replace('T', ' ');
 }
@@ -49,10 +52,16 @@ function getFingerprint() {
     return (new Fingerprint2()).getSync().fprint;
 }
 
+/**
+ * returns parent's hostname if ad is on a different domain from the visited site
+ */
 function getHost() {
     return (window.location != window.parent.location) ? getHostName(document.referrer) : document.location.hostname;
 }
 
+/**
+ * returns only the hostname from a url
+ */
 function getHostName(url) {
     var a = document.createElement('a');
     a.href = url;
