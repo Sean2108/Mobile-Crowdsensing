@@ -6,7 +6,7 @@ Schema:
 - id                                                    - int
 - device (cookie information)                           - int
 - fingerprint (from FingerprintJS2 library)             - varchar(255)
-- timestamp (in UTC)                                    - timestamp 
+- timestamp (in GTM+8)                                  - timestamp 
 - latitude                                              - double
 - longitude                                             - double
 - altitude (if available)                               - double
