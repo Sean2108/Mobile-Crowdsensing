@@ -22,3 +22,5 @@ Node backend(backend.js) distributes html and js files(frontend.html, frontend_s
 HTML5 geolocation API will be used if available. However if the connection is not secure (HTTP) or user denies location permissions, then geoplugin will be used to lookup IP address to location. However this is likely to be less accurate.
 
 Run with: node backend.js, then access localhost:8000 on browser.
+
+Reference: https://people.cs.umass.edu/~mcorner/papers/mobicom17.pdf
