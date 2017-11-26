@@ -28,6 +28,7 @@ function showPositionGeolocation(position) {
             position.coords.heading, position.coords.speed, getHost(), 
             window.navigator.language, checkOS(), getFingerprint());
 }
+
 /**
  * gets location information with ip address lookup and browser information
  * time is set to variable timezone
@@ -46,9 +47,7 @@ function showPositionIPLookup() {
  * returns date and time offset to specified timezone in format YYYY-MM-DD hh:mm:ss
  */
 function getTime(utcOffset) {
-    var dateTime = new Date();
-    dateTime.setHours(dateTime.getHours() + utcOffset);
-    return dateTime.toISOString().slice(0, 19).replace('T', ' ');
+    return moment.utc().add(utcOffset, 'hours').format('YYYY-MM-DD HH:mm:ss');
 }
 
 /**
