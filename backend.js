@@ -58,7 +58,7 @@ con.connect((err) => {
 });
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/static_scripts'));
 
 var htmlPath = path.join(__dirname + '/frontend.html');
 
