@@ -1,7 +1,6 @@
 var x = document.getElementById("info");
 Location();
 var setPost = setInterval(Location, 30000);
-var dbAddress = 'http://localhost:8000';    //10.0.2.2:8000 -> android emulator loopback
 var timezone = 8;   // Singapore timezone: GMT+8
 
 /**
@@ -111,7 +110,7 @@ function postJson(dateTimeNow, lat, lon, altitude, accuracy, heading, speed, hos
         type: 'POST',
         data: JSON.stringify(data),
         contentType: 'application/json',
-        url: dbAddress         
+        url: "/data"         
     });
 }
 

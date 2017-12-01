@@ -79,7 +79,7 @@ app.get('/', function(request, response) {
 /**
  * receive response from client and add collected information to database
  */
-app.post('/', function(request, response){
+app.post('/data', function(request, response){
     response.sendFile(htmlPath);
     var time = request.body.ts;
     var device = request.body.device;
