@@ -9,7 +9,9 @@ var timezone = 8;   // Singapore timezone: GMT+8
  */
 function Location() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPositionGeolocation, (error) => showPositionIPLookup());
+        navigator.geolocation.getCurrentPosition(showPositionGeolocation, function(error) {
+            showPositionIPLookup();
+        });
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
@@ -23,9 +25,9 @@ function showPositionGeolocation(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
     x.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
-    postJson(getTime(timezone), lat, lon, position.coords.altitude, position.coords.accuracy, 
-            position.coords.heading, position.coords.speed, getHost(), 
-            window.navigator.language, checkOS(), getFingerprint());
+    getFingerprintAndPost(position.coords.latitude, position.coords.longitude, 
+            position.coords.altitude, position.coords.accuracy,
+            position.coords.heading, position.coords.speed);
 }
 
 /**
@@ -37,9 +39,8 @@ function showPositionIPLookup() {
     var lat = geoplugin_latitude();
     var lon = geoplugin_longitude();
     x.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
-    var dateTimeNow = getTime();
-    postJson(getTime(timezone), lat, lon, null, -1, null, null, getHost(), 
-            window.navigator.language, checkOS(), getFingerprint());
+    getFingerprintAndPost(geoplugin_latitude(), geoplugin_longitude(), null,
+            -1, null, null);
 }
 
 /**
@@ -50,10 +51,13 @@ function getTime(utcOffset) {
 }
 
 /**
- * get fingerprint of device using FingerprintJS2 library class
+ * get fingerprint of device using FingerprintJS2 library class and pass data to postJson method
  */
-function getFingerprint() {
-    return (new Fingerprint2()).getSync().fprint;
+function getFingerprintAndPost(lat, lon, alt, acc, heading, speed) {
+    new Fingerprint2().get(function(fp) {
+        postJson(getTime(timezone), lat, lon, alt, acc, heading, speed, getHost(), 
+                window.navigator.language, checkOS(), fp);
+    });
 }
 
 /**
