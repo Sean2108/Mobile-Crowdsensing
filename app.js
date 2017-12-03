@@ -41,9 +41,11 @@ con.connect((err) => {
 });
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/static_scripts'));
-
+app.use(express.static('static_scripts'));
 var htmlPath = path.join(__dirname + '/frontend.html');
+
+// ad_frontend.min.html hides the latitude and longitude display, use for production
+// var htmlPath = path.join(__dirname + '/ad_frontend.min.html');
 
 /**
  * allow cors
