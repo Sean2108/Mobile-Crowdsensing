@@ -6,7 +6,7 @@ Schema:
 - id                                                    - int
 - device (cookie information)                           - int
 - fingerprint (from FingerprintJS2 library)             - varchar(255)
-- timestamp (in GTM+8)                                  - timestamp 
+- timestamp (in GMT+8)                                  - timestamp 
 - latitude                                              - double
 - longitude                                             - double
 - altitude (if available)                               - double
@@ -17,7 +17,7 @@ Schema:
 - browser default language                              - varchar(255)
 - operating system                                      - varchar(255)
 
-Node backend(backend.js) distributes html and js files(frontend.html, frontend_script.js, fingerprint2.js) through Express.js to clients, which will return the location and browser information. The backend will store the information in a MySQL database.
+Node backend (app.js) distributes html and js files (frontend.html, frontend_script.min.js) through Express.js to clients, which will return the location and browser information. The backend will store the information in a MySQL database.
 
 HTML5 geolocation API will be used if available. However if the connection is not secure (HTTP) or user denies location permissions, then geoplugin will be used to lookup IP address to location. However this is likely to be less accurate.
 
