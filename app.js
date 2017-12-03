@@ -46,7 +46,6 @@ con.connect((err) => {
         "lang VARCHAR(255), os VARCHAR(255))";
     con.query(sql, (err, result) => {
         if (err) throw err;
-        console.log("Table created");
     });
 
     con.query("SELECT COALESCE(MAX(device), -1) AS device FROM users", 
@@ -65,21 +64,17 @@ var htmlPath = path.join(__dirname + '/frontend.html');
 /**
  * return maxDeviceId for frontend to access and assign to new visitors
  */
-app.get('/maxdevice', function(request, response) {
-    response.status(200).send(maxDeviceId.toString());
-});
+app.get('/maxdevice', (request, response) => response.status(200).send(maxDeviceId.toString()));
 
 /**
  * sends html file to be displayed to client
  */
-app.get('/', function(request, response) {
-    response.sendFile(htmlPath);
-});
+app.get('/', (request, response) => response.sendFile(htmlPath));
 
 /**
  * receive response from client and add collected information to database
  */
-app.post('/data', function(request, response){
+app.post('/data', (request, response) => {
     response.sendFile(htmlPath);
     var time = request.body.ts;
     var device = request.body.device;
@@ -123,5 +118,5 @@ function addRecord(time, device, fingerprint, lat, lon, altitude, accuracy, head
     con.query(sql, [time, device, fingerprint, lat, lon, altitude, accuracy, heading, speed, host, lang, os]);
 }
 
-app.listen(8000, '0.0.0.0');//'localhost' || '10.100.47.194');
+app.listen(8000, '0.0.0.0');
 console.log("running at port 8000");

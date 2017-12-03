@@ -2,18 +2,25 @@
   "name": "mobile_crowdsensing",
   "version": "1.0.0",
   "description": "Uses advertisements to collect location and browser data for research",
-  "main": "backend.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sean2108/Mobile-Crowdsourcing.git"
+    "url": "git+https://github.com/Sean2108/Mobile-Crowdsensing.git"
+  },
+  "dependencies": {
+    "body-parser": "latest",
+    "path": "latest",
+    "express": "latest",
+    "mysql": "latest"
   },
   "author": "Sean",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Sean2108/Mobile-Crowdsourcing/issues"
+    "url": "https://github.com/Sean2108/Mobile-Crowdsensing/issues"
   },
-  "homepage": "https://github.com/Sean2108/Mobile-Crowdsourcing#readme"
+  "homepage": "https://github.com/Sean2108/Mobile-Crowdsensing#readme"
 }
