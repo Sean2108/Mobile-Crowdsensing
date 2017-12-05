@@ -9,11 +9,11 @@ const app = express();
  * connect to the database
  */
 con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "ad_latlon",
-    port: "3306"
+    host: "localhost",      // process.env.RDS_HOSTNAME
+    user: "root",           // process.env.RDS_USERNAME
+    password: "",           // process.env.RDS_PASSWORD
+    database: "ad_latlon",  // process.env.RDS_DB_NAME
+    port: "3306"            // process.env.RDS_PORT
 });
 
 var maxDeviceId;
@@ -118,5 +118,5 @@ function addRecord(time, device, fingerprint, lat, lon, altitude, accuracy, head
     con.query(sql, [time, device, fingerprint, lat, lon, altitude, accuracy, heading, speed, host, lang, os]);
 }
 
-app.listen(8000, '0.0.0.0');
+app.listen(8000, '0.0.0.0'); // AWS: process.env.port
 console.log("running on port 8000");
