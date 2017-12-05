@@ -7,6 +7,10 @@ const app = express();
 
 /**
  * connect to the database
+ * for elastic beanstalk, go to software configuration under configuration 
+ * and add the key values pairs under environment properties.
+ * eg property name: RDS_DB_NAME, property value: mobile_crowsensing
+ * must not have configuration in your code in production
  */
 con = mysql.createConnection({
     host: "localhost",      // process.env.RDS_HOSTNAME
