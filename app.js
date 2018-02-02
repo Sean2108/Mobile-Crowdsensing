@@ -2,6 +2,7 @@ var mysql = require('mysql');
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var options = require('./options');
 
 const app = express();
 
@@ -13,11 +14,11 @@ const app = express();
  * must not have configuration in your code in production
  */
 con = mysql.createConnection({
-    host: "localhost",      // process.env.RDS_HOSTNAME
-    user: "root",           // process.env.RDS_USERNAME
-    password: "",           // process.env.RDS_PASSWORD
-    database: "ad_latlon",  // process.env.RDS_DB_NAME
-    port: "3306"            // process.env.RDS_PORT
+    host: options.storageConfig.host,           // process.env.RDS_HOSTNAME
+    user: options.storageConfig.user,           // process.env.RDS_USERNAME
+    password: options.storageConfig.password,   // process.env.RDS_PASSWORD
+    database: options.storageConfig.database,   // process.env.RDS_DB_NAME
+    port: options.storageConfig.port            // process.env.RDS_PORT
 });
 
 var maxDeviceId;
