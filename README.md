@@ -21,6 +21,16 @@ Node backend (app.js) distributes html and js files (frontend.html, frontend_scr
 
 HTML5 geolocation API will be used if available. However if the connection is not secure (HTTP) or user denies location permissions, then geoplugin will be used to lookup IP address to location. However this is likely to be less accurate.
 
+To run locally, add a config.json file in the same directory and add the following information:
+
+{
+    "host" : "",
+    "user" : "",
+    "password" : "",
+    "database" : "",
+    "port" : ""
+}
+
 Run with: node backend.js, then access localhost:8000 on browser.
 
 Reference: https://people.cs.umass.edu/~mcorner/papers/mobicom17.pdf (Advertising-based Measurement: A Platform of 7 Billion Mobile Devices)
