@@ -23,6 +23,7 @@ HTML5 geolocation API will be used if available. However if the connection is no
 
 To run locally, add a config.json file in the same directory and add the following mySQL database information:
 
+```json
 {
     "host" : "",
     "user" : "",
@@ -30,7 +31,12 @@ To run locally, add a config.json file in the same directory and add the followi
     "database" : "",
     "port" : ""
 }
+```
 
-Run with: node app.js, then access localhost:8000 on browser.
+Run with: 
+```shell
+node app.js
+```
+then access localhost:8000 on browser.
 
 Reference: https://people.cs.umass.edu/~mcorner/papers/mobicom17.pdf (Advertising-based Measurement: A Platform of 7 Billion Mobile Devices)
